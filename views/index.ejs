@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <h1>
+    <%= title %>
+  </h1>
+  <p>Welcome to
+    <%= title %>
+  </p>
+  <table>
+    <tr>
+      <th>userName</th>
+      <th>姓名</th>
+    </tr>
+    <% for (var i=0; i<datas.length; i++) { %>
+      <tr>
+        <td>
+          <%= datas[i].userName %>
+        </td>
+        <td>
+          <%= datas[i].name %>
+        </td>
+      </tr>
+      <% } %>
+  </table>
+</body>
+
+</html>
