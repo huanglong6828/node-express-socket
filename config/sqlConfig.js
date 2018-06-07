@@ -1,5 +1,5 @@
 // 引入mysql
-
+var query = {}
 var mysql = require('mysql');
 var pool = mysql.createPool({
   host: "localhost", //这是数据库的地址
@@ -13,7 +13,7 @@ var pool = mysql.createPool({
  * @param {*} sql sql语句
  * @param {*} callback 回调函数
  */
-function query(sql, callback) {
+query.query = function (sql, callback) {
   pool.getConnection(function (err, connection) {
     connection.query(sql, function (err, rows) {
       callback(err, rows);
@@ -22,4 +22,4 @@ function query(sql, callback) {
   });
 }
 
-exports.query = query;
+module.exports = query

@@ -6,31 +6,51 @@
     <%= title %>
   </title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src="https://cdn.bootcss.com/socket.io/2.1.1/socket.io.dev.js"></script>
+  <script src="https://cdn.bootcss.com/axios/0.18.0/axios.js"></script>
 </head>
 
 <body>
   <h1>
     <%= title %>
   </h1>
-  <p>Welcome to
-    <%= title %>
+  <p>
+    <%= message %>
   </p>
-  <table>
-    <tr>
-      <th>userName</th>
-      <th>姓名</th>
-    </tr>
-    <% for (var i=0; i<datas.length; i++) { %>
-      <tr>
-        <td>
-          <%= datas[i].userName %>
-        </td>
-        <td>
-          <%= datas[i].name %>
-        </td>
-      </tr>
-      <% } %>
-  </table>
+  <div class="j-content"></div>
+  <input type="text" class="j-send">
+  <button class="j-btn">发送</button>
+
+  <button onclick="setmsg()">接口设置推送</button>
+  <script>
+    var sendNode = document.getElementsByClassName('j-send')[0];
+    var btnNode = document.getElementsByClassName('j-btn')[0];
+    var contentNode = document.getElementsByClassName('j-content')[0];
+    //建立连接
+    socket = io.connect('ws://localhost:3001');
+    btnNode.onclick = function () {
+      var sendText = sendNode.value;
+
+      //向服务端发送信息
+      socket.emit("message", { msg: sendText });
+    };
+    //接收服务端推送的信息
+    socket.on("message", function (obj) {
+      var curContent = contentNode.innerHTML;
+      contentNode.innerHTML = curContent + obj.msg;
+    });
+
+    function setmsg() {
+      axios.post('http://localhost:3000/index/setMsg', {
+          msg: '接口设置的哦',
+        })
+        .then(function (response) {
+          console.log(response);
+        }).catch(res => {
+          console.log(ReadableStreamReader)
+        })
+    }
+  </script>
 </body>
 
 </html>
